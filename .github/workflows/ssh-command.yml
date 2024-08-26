@@ -20,7 +20,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install sshpass  # 安装 sshpass
+          sudo apt-get update
+          sudo apt-get install -y sshpass  # 安装 sshpass
 
       - name: Run restore script
         env:
