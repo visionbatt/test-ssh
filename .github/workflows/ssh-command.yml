@@ -3,6 +3,7 @@ name: SSH Command Runner
 on:
   schedule:
     - cron: '*/20 * * * *' # 每 20 分钟运行一次
+  workflow_dispatch:       # 允许手动触发
 
 jobs:
   run-ssh-command:
