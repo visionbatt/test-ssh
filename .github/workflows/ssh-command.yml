@@ -1,25 +1,30 @@
-name: SSH Command Runner
+name: 恢复vless服务
 
 on:
   schedule:
-    - cron: '*/20 * * * *' # 每 20 分钟运行一次
-  workflow_dispatch:       # 允许手动触发
+    - cron: '*/20 * * * *'  # 每20分钟执行一次
+  workflow_dispatch:
 
 jobs:
-  run-ssh-command:
+  restore_and_notify:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
+      - name: 设置Python环境
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # 替换为您需要的 Python 版本
 
-      - name: Connect to server and run command
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      - name: 安装依赖
         run: |
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh'
+          python -m pip install --upgrade pip
+          pip install requests  # 只需安装需要的依赖，此处假设使用 requests 发送 HTTP 请求
+
+      - name: 执行Python脚本恢复vless服务
+        env:
+          ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
+        run: |
+          python3 vless/recover_vless.py
