@@ -13,16 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install SSH Client
-        run: sudo apt-get install -y openssh-client
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
 
       - name: Connect to server and run command
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         run: |
-          echo "$SSH_KEY" > ssh_key
-          chmod 600 ssh_key
-          ssh -o StrictHostKeyChecking=no -i ssh_key $SSH_USER@$SSH_HOST 'cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh'
-          rm ssh_key
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh'
