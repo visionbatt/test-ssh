@@ -1,5 +1,3 @@
-# 文件: restore_vless.py
-
 import os
 import json
 import subprocess
