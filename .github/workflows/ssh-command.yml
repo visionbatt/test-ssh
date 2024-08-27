@@ -16,12 +16,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # 可以根据需要选择其他版本
+          python-version: '3.9'  # 根据需要选择其他版本
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass  # 安装 sshpass
+          pip install paramiko
 
       - name: Run restore script
         env:
