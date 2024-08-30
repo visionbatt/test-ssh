@@ -2,7 +2,7 @@ name: Restore Vless Service
 
 on:
   schedule:
-    - cron: '*/20 * * * *'  # 每20分钟运行一次
+    - cron: "30 */4 * * *"  # 每4个小时运行一次
   workflow_dispatch:       # 允许手动触发
 
 jobs:
