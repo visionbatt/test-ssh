@@ -16,11 +16,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # 根据需要选择其他版本
+          python-version: '3.9'  # 根据需要选择Python版本
 
       - name: Install dependencies
         run: |
-          pip install paramiko
+          python -m pip install --upgrade pip
+          pip install paramiko  # 安装 paramiko 库
 
       - name: Run restore script
         env:
