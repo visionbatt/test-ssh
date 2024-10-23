@@ -31,6 +31,10 @@ for server in servers:
 
     try:
         ssh.connect(hostname=host, port=port, username=username, password=password)
+        # 直接执行默认恢复命令
+        stdin, stdout, stderr = ssh.exec_command(default_restore_command)
+        output = stdout.read().decode('utf-8')
+        error = stderr.read().decode('utf-8')
         stdin, stdout, stderr = ssh.exec_command(cron_command)
         output = stdout.read().decode('utf-8')
         error = stderr.read().decode('utf-8')
